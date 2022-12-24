@@ -5,5 +5,5 @@ app = Flask(__name__)
 app.secret_key = "bananas"
 bcrypt = Bcrypt(app)
 
-DATABASE = "ka8anivojoliyick"
-# DATABASE = "BakedBlessingsDB"
+# DATABASE = "ka8anivojoliyick"
+DATABASE = "BakedBlessingsDB"
