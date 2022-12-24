@@ -1,0 +1,72 @@
+{% extends 'admin/base.html' %}
+
+{% block admin_title %}
+<h1 class="text-4xl">All Orders</h1>
+{% endblock admin_title %}
+
+{% block admin_content %}
+<div class="mx-32 grid grid-cols-4 gap-10">
+    <div class="col-span-3">
+        <table>
+            <thead>
+                <tr>
+                    <th>Order Number</th>
+                    <th>User Name</th>
+                    <th>User Email</th>
+                    <th>User Phone Number</th>
+                    <th>Amount of Items</th>
+                    <th>Delivery Date</th>
+                    <th>Status</th>
+                    <th>New Message</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in all_orders %}
+                {% if order.status != 'order completed' %}
+                <tr>
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.user.fullname }}</td>
+                    <td>{{ order.user.email }}</td>
+                    <td>{{ order.user.phone_num }}</td>
+                    <td>{{ order.product_list | length }}</td>
+                    <td>{{ order.delivery_date }}</td>
+                    <td class="{{order_status_colors[order_status_list.index(order.status)]}}">
+                        <span>{{ order.status }}</span>
+                    </td>
+                    <td>
+                        {% if order.public_note_read %}
+                        <span>No</span>
+                        {% else %}
+                        <span>Yes</span>
+
+                        {% endif %}
+                    </td>
+                    <td><a class="btn py-1 bg-yellow-400" href="/admin/order/{{ order.id }}">View</a></td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="flex flex-col gap-3">
+        <h3 class="text-xl mb-2">Next 7 days</h3>
+        {% for date_group in sorted_orders | reverse %}
+        <div class="shadow shadow-black p-1 rounded-lg">
+            {% if date_group %}
+            <p class="text-xl font-bold underline">{{ date_group.strftime("%a %d %b") }}</p>
+            {% else %}
+            <p class="text-xl font-bold underline">Date not set</p>
+            {% endif %}
+            
+            {% for order in sorted_orders[date_group]  %}
+            <p class="font-bold">{{ order.user.fullname }}</p>
+            {% for item in order.product_list %}
+            <p>{{ item.name }}</p>
+            {% endfor %}
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock admin_content %}

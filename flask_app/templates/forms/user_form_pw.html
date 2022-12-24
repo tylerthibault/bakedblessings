@@ -1,0 +1,31 @@
+
+<div class="flex flex-col gap-3 shadow shadow-black rounded-lg p-5 w-full">
+    <h2 class="text-xl">Update Password</h2>
+    <form action="/user/{{ user.id }}/update" method="post" class="w-fit">
+        <div class="mb-3 flex justify-between gap-10">
+            <label for="old_pw">Old Password</label>
+            <div class="flex flex-col gap-1">
+                <input type="password" name="old_pw" id="old_pw">
+                {% for message in get_flashed_messages(category_filter=['err_user_pw']) %}
+                <p>{{message}}</p>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="mb-3 flex justify-between gap-10">
+            <label for="pw">New Password</label>
+            <input type="password" name="pw" id="pw">
+        </div>
+        <div class="mb-3 flex justify-between gap-10">
+            <label for="confirm_pw">Confirm New Password</label>
+            <div class="flex flex-col gap-1">
+                <input type="password" name="confirm_pw" id="confirm_pw">
+                {% for message in get_flashed_messages(category_filter=['err_user_pw_confirm']) %}
+                <p>{{message}}</p>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="flex justify-end">
+            <button class="btn-select">Update Password</button>
+        </div>
+    </form>
+</div>

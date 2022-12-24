@@ -1,0 +1,64 @@
+<div class="" id="menu">
+    <div class="flex flex-col gap-3 items-center my-5">
+        <h2 class="text-4xl ">Menu</h2>
+        <p>--- Baked with love and patience ---</p>
+        {% if 'uuid' in session %}
+        {% if 'order_id' not in session %}
+        <a class="btn bg-accent-mustard text-xl" href="/order/create">Create New Order</a>
+        {% else %}
+        <div class="flex gap-3">
+            <a class="btn btn-danger text-white text-xl" href="/order/{{ session['order_id'] }}/delete">Cancel Order</a>
+            <a class="btn btn-success text-xl" href="/dashboard/order/{{ session['order_id'] }}">Go To Cart</a>
+        </div>
+        {% endif %}
+        {% else %}
+        <p>Please <a class="btn bg-slate-400 text-white" href="/user/new">Login or Register</a> to create an order</p>
+        {% endif %}
+    </div>
+    <div class="flex justify-center gap-5 flex-wrap">
+        {% for cat in all_categories %}
+        {% for product in cat.all_products %}
+        <div class="md:w-1/2 md:w-1/3 flex flex-col min-h-[15em]">
+            <div class="flex justify-between border-b-4 border-black">
+                <h3 class="font-bold text-xl">{{ product.name }}</h3>
+                <span class="font-bold text-xl font-bb-font-heading">${{ product.price }}</span>
+            </div>
+            <div class="flex flex-col lg:grid grid-cols-6 gap-1 h-full w-full max-w-md">
+                {% if product.img_url %}
+                <div class="col-span-2 flex justify-center items-center w-full h-full max-h-64 max-w-md bg-gray-300">
+                    <img class="h-full w-full object-cover " src="{{ product.img_url }}" alt="product image">
+                </div>
+                {% else %}
+                <div class="col-span-2 flex justify-center items-center w-full h-full bg-gray-300">
+                    <p>image</p>
+                </div>
+                {% endif %}
+                <div class="col-span-4 flex flex-col h-full">
+                    <div class="flex gap-3">
+                        <p><strong>Size</strong> (inches): {{ product.size }}</p>
+                        <p><strong>Quantity:</strong> {{ product.qty }}</p>
+                    </div>
+
+                    {% if product.is_available %}
+                    <p>This product is currently available! 😊</p>
+                    {% else %}
+                    <p>This product is <strong class="underline">NOT</strong> currently available! 😭</p>
+                    {% endif %}
+
+                    <p>{{ product.description }}</p>
+                    
+                    {% if product.is_available %}
+                    {% if 'order_id' in session %}
+                    <div class="flex justify-end mt-auto">
+                        <a class="btn btn-select form-api-btn" api="/api/order_content/{{ product.id }}/create" target="self" method="get" after-action="updateCart">Add To Order</a>
+                    </div>
+                    {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <hr>
+        {% endfor %}
+    </div>
+</div>
