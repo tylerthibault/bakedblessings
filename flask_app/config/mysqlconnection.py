@@ -22,7 +22,7 @@ class MySQLConnection:
             cursorclass = pymysql.cursors.DictCursor,
             autocommit = True
             )
-        establish the connection to the database
+        # establish the connection to the database
         self.connection = connection
     # the method to query the database
     def query_db(self, query, data=None):
