@@ -30,13 +30,14 @@ class Order(base_model.Base):
         return user_model.User.get(id = self.user_id)
 
     @classmethod
-    def get_all(cls, data=None):
-        if data:
+    def get_all(cls, where=False, **data):
+        if not where:
             query = "SELECT * FROM orders LEFT JOIN order_contents ON order_contents.order_id = orders.id LEFT JOIN products ON order_contents.product_id = products.id LEFT JOIN users ON orders.user_id = users.id where user_id = %(user_id)s;"
             results = connectToMySQL(DATABASE).query_db(query, data)
         else:
             query = "SELECT * FROM orders LEFT JOIN order_contents ON order_contents.order_id = orders.id LEFT JOIN products ON order_contents.product_id = products.id LEFT JOIN users ON orders.user_id = users.id;"
             results = connectToMySQL(DATABASE).query_db(query)
+            
         if not results:
             return []
         all_orders = []

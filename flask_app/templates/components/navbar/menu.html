@@ -12,7 +12,7 @@
 
     <li><a href="/dashboard/orders">My Orders</a></li>
     <li class="hidden md:inline-block">|</li>
-    <li><a href="/dashboard/user/{{ user.id }}/edit">Settings</a></li>
+    <li><a href="/dashboard/user/{{ session['uuid'] }}/edit">Settings</a></li>
     <li class="hidden md:inline-block">|</li>
 
     {% endif %}

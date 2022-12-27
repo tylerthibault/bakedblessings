@@ -67,7 +67,9 @@ class Base:
         query = f"SELECT * FROM {cls.table_name} WHERE {where_data};"
         result = connectToMySQL(DATABASE).query_db(query, data)
 
+        print(result)
         if not result:
+            print("base model - get function - fail")
             return False
         if len(result) > 1:
             list = []
@@ -78,8 +80,8 @@ class Base:
         return cls(result[0])
 
     @classmethod
-    def get_all(cls, data=None):
-        if data == None:
+    def get_all(cls, where=False, **data):
+        if not where:
             query = f"SELECT * FROM {cls.table_name};"
             results = connectToMySQL(DATABASE).query_db(query)
         else:
@@ -88,6 +90,7 @@ class Base:
             results = connectToMySQL(DATABASE).query_db(query, data)
 
         if not results:
+            print("base model - get_all function - fail")
             return []
         all_items = []
         for dict in results:
