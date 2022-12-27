@@ -82,7 +82,7 @@ def admin_orders_all():
 def order_one():
     context = {
         'user': user_model.User.get(id=session['uuid']),
-        'all_orders': order_model.Order.get_all({'user_id': session['uuid']})
+        'all_orders': order_model.Order.get_all(where=True, user_id = session['uuid'])
     }
     return render_template("pages/order_one.html", **context)
 
