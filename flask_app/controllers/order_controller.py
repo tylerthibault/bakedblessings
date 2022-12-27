@@ -129,7 +129,7 @@ def order_update(id):
 
             all_orders_on_date = order_model.Order.get(delivery_date = data['delivery_date'])
             if all_orders_on_date:
-                config = config_model.Config.get(id = 1)
+                config = config_model.Config.get_one()
                 if type(all_orders_on_date) != type([]):
                     all_orders_on_date = [all_orders_on_date]
                 if len(all_orders_on_date) >= config.max_daily_orders:
