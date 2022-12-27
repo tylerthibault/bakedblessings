@@ -16,5 +16,6 @@ app.config['MAIL_USE_TLS'] = False
 mail = Mail(app)
 mail.init_app(app)
 
-DATABASE = "ka8anivojoliyick"
-# DATABASE = "BakedBlessingsDB"
+ISlIVE = True
+
+DATABASE = os.environ.get("LIVE_DB_DB") if ISlIVE else os.environ.get("LOCAL_DB_DB")

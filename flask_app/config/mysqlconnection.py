@@ -1,31 +1,21 @@
+from flask_app import ISlIVE
+import os
+
 # a cursor is the object we use to interact with the database
 import pymysql.cursors
 # this class will give us an instance of a connection to our database
 class MySQLConnection:
     def __init__(self, db):
         # change the user and password as needed
-
-        # *********************************************************************************
         connection = pymysql.connect(
-            host = 'phtfaw4p6a970uc0.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-            user = 'j00xbm3t2oos0zpl', 
-            password = 'k1edkpaae04pbz9v', 
+            host = os.environ.get("LIVE_DB_HOST") if ISlIVE else os.environ.get("LOCAL_DB_HOST"),
+            user =  os.environ.get("LIVE_DB_USER") if ISlIVE else os.environ.get("LOCAL_DB_USER"), 
+            password =  os.environ.get("LIVE_DB_PASSWORD") if ISlIVE else os.environ.get("LOCAL_DB_PASSWORD"), 
             db = db,
             charset = 'utf8mb4',
             cursorclass = pymysql.cursors.DictCursor,
             autocommit = True
             )
-        # *********************************************************************************
-        # connection = pymysql.connect(
-        #     host = 'localhost',
-        #     user = 'root', 
-        #     password = 'root', 
-        #     db = db,
-        #     charset = 'utf8mb4',
-        #     cursorclass = pymysql.cursors.DictCursor,
-        #     autocommit = True
-        #     )
-        # *********************************************************************************
 
         # establish the connection to the database
         self.connection = connection
