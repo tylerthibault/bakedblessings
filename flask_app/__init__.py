@@ -16,5 +16,5 @@ app.config['MAIL_USE_TLS'] = False
 mail = Mail(app)
 mail.init_app(app)
 
-# DATABASE = "ka8anivojoliyick"
-DATABASE = "BakedBlessingsDB"
+DATABASE = "ka8anivojoliyick"
+# DATABASE = "BakedBlessingsDB"
